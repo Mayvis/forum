@@ -7,11 +7,9 @@
                     {{ $reply->created_at->diffForHumans() }}...
                 </h6>
 
-                @if(auth()->check())
-                    <div>
-                        <favorite :reply="{{ $reply }}"></favorite>
-                    </div>
-                @endif
+                <div v-if="signedIn">
+                    <favorite :reply="data"></favorite>
+                </div>
             </div>
         </div>
 
