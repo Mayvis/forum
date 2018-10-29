@@ -25,6 +25,7 @@ window.flash = function(message, level = 'success') {
 };
 
 Vue.component('flash', require('./components/Flash.vue'));
+Vue.component('reply', require('./components/Reply'));
 
 const app = new Vue({
     el: '#app'

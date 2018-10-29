@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Reply;
 use App\Thread;
+
 //use Illuminate\Http\Request;
 
 class RepliesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->only('store');
+        $this->middleware('auth');
     }
 
     /**
@@ -28,5 +30,38 @@ class RepliesController extends Controller
         ]);
 
         return back()->with('flash', 'Your reply has been left.');
+    }
+
+    /**
+     * Update the given reply.
+     *
+     * @param Reply $reply
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function update(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+
+        $reply->update(['body' => request('body')]);
+    }
+
+    /**
+     * Delete the given reply.
+     *
+     * @param Reply $reply
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function destroy(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+
+        $reply->delete();
+
+        if (request()->wantsJson()) {
+            return response(['status' => 'Reply deleted!']);
+        }
+
+        return back();
     }
 }

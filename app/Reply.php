@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed id
  * @property mixed favorites
  * @property mixed thread
+ * @property mixed user_id
  */
 class Reply extends Model
 {
@@ -16,6 +17,8 @@ class Reply extends Model
     protected $guarded = [];
 
     protected $with = ['owner', 'favorites'];
+
+    protected $appends = ['favoritesCount', 'isFavorited'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
