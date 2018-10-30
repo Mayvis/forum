@@ -20,6 +20,7 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.4.2"
+        "@fortawesome/fontawesome-free": "^5.4.2",
+        "moment": "^2.22.2"
     }
 }
