@@ -3,7 +3,7 @@
 
     export default {
         props: ['initialRepliesCount'],
-        components: { Replies },
+        components: {Replies},
         data() {
             return {
                 repliesCount: this.initialRepliesCount

@@ -6,7 +6,10 @@ namespace App;
 trait Favoritable
 {
 
-    public static function bootFavoritable()
+    /**
+     * When deleting model, also delete favorite.
+     */
+    protected static function bootFavoritable()
     {
         static::deleting(function ($model) {
             $model->favorites->each->delete();
@@ -58,6 +61,9 @@ trait Favoritable
         }
     }
 
+    /**
+     * Unfavorite the current reply.
+     */
     public function unfavorite()
     {
         $attributes = ['user_id' => auth()->id()];
