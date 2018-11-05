@@ -18,7 +18,7 @@
         <div class="card-body">
             <div v-if="editing">
                 <div class="form-group">
-                    <textarea class="form-control" v-model="body"></textarea>
+                    <textarea class="form-control" v-model="body" title="body"></textarea>
                 </div>
 
                 <button class="btn btn-sm btn-primary" @click="update">Update</button>

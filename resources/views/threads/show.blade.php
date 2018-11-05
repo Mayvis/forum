@@ -31,25 +31,28 @@
                         </div>
                     </div>
 
-                    <replies :data="{{ $thread->replies }}"
-                             @removed="repliesCount--"
+                    <replies @removed="repliesCount--"
                              @added="repliesCount++"></replies>
                 </div>
 
                 <div class="col-md-4">
                     <div class="card mb-3">
-                        <div class="card-header">
-                            <a href="{{ route('profile', $thread->creator->name) }}">{{ $thread->creator->name }}</a>
-                            posted:
-                            {{ $thread->title }}
-                        </div>
+                        {{--<div class="card-header">--}}
+                            {{--<a href="{{ route('profile', $thread->creator->name) }}">{{ $thread->creator->name }}</a>--}}
+                            {{--posted:--}}
+                            {{--{{ $thread->title }}--}}
+                        {{--</div>--}}
 
                         <div class="card-body">
                             <p>
                                 This thread was published {{ $thread->created_at->diffForHumans() }} by <a
-                                    href="#">{{ $thread->creator->name }}</a>, and currently
+                                        href="#">{{ $thread->creator->name }}</a>, and currently
                                 has <span
-                                    v-text="repliesCount"></span> {{ str_plural('comment', $thread->replies_count) }}
+                                        v-text="repliesCount"></span> {{ str_plural('comment', $thread->replies_count) }}
+                            </p>
+
+                            <p>
+                                <subscribe-button :active="{{ json_encode($thread->isSubscribedTo) }}"></subscribe-button>
                             </p>
                         </div>
                     </div>
