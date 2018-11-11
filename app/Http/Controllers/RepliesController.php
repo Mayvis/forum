@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreatePostRequest;
 use App\Reply;
 use App\Thread;
-use Illuminate\Support\Facades\Gate;
 
 class RepliesController extends Controller
 {
@@ -42,21 +41,17 @@ class RepliesController extends Controller
      * Update the given reply.
      *
      * @param Reply $reply
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @return void
      * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Reply $reply)
     {
         $this->authorize('update', $reply);
 
-        try {
-            $this->validate(request(), ['body' => 'required|spamfree']);
+        $this->validate(request(), ['body' => 'required|spamfree']);
 
-            $reply->update(['body' => request('body')]);
-        } catch (\Exception $e) {
-            return response('Sorry, your reply could not be saved at this time.', 422);
-        }
-
+        $reply->update(['body' => request('body')]);
     }
 
     /**

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed thread
  * @property mixed user_id
  * @property mixed created_at
+ * @property mixed body
  */
 class Reply extends Model
 {
@@ -66,5 +67,20 @@ class Reply extends Model
     public function path()
     {
         return $this->thread->path() . "#reply-{$this->id}";
+    }
+
+    public function mentionedUsers()
+    {
+        preg_match_all('/@([\w\-\_]+)/', $this->body, $matches);
+
+        return $matches[1];
+    }
+
+    /**
+     * @param $body
+     */
+    public function setBodyAttribute($body)
+    {
+        $this->attributes['body'] = preg_replace('/@([\w\-\_]+)/', '<a href="/profiles/$1">$0</a>', $body);
     }
 }
