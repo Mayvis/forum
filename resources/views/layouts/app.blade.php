@@ -32,6 +32,8 @@
         .flex { flex: 1; }
         [v-cloak] { display: none; }
     </style>
+
+    @yield('header')
 </head>
 <body>
 <div id="app">

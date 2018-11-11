@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('header')
+    <link rel="stylesheet" href="/css/vendor/jquery.atwho.css">
+@endsection
+
 @section('content')
     <thread-view :initial-replies-count="{{ $thread->replies_count }}" inline-template>
         <div class="container">
@@ -38,21 +42,22 @@
                 <div class="col-md-4">
                     <div class="card mb-3">
                         {{--<div class="card-header">--}}
-                            {{--<a href="{{ route('profile', $thread->creator->name) }}">{{ $thread->creator->name }}</a>--}}
-                            {{--posted:--}}
-                            {{--{{ $thread->title }}--}}
+                        {{--<a href="{{ route('profile', $thread->creator->name) }}">{{ $thread->creator->name }}</a>--}}
+                        {{--posted:--}}
+                        {{--{{ $thread->title }}--}}
                         {{--</div>--}}
 
                         <div class="card-body">
                             <p>
                                 This thread was published {{ $thread->created_at->diffForHumans() }} by <a
-                                        href="#">{{ $thread->creator->name }}</a>, and currently
+                                    href="#">{{ $thread->creator->name }}</a>, and currently
                                 has <span
-                                        v-text="repliesCount"></span> {{ str_plural('comment', $thread->replies_count) }}
+                                    v-text="repliesCount"></span> {{ str_plural('comment', $thread->replies_count) }}
                             </p>
 
                             <p>
-                                <subscribe-button :active="{{ json_encode($thread->isSubscribedTo) }}"></subscribe-button>
+                                <subscribe-button
+                                    :active="{{ json_encode($thread->isSubscribedTo) }}"></subscribe-button>
                             </p>
                         </div>
                     </div>
