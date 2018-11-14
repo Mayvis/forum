@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed user_id
  * @property mixed subscriptions
  * @property mixed updated_at
+ * @property mixed title
  */
 class Thread extends Model
 {
