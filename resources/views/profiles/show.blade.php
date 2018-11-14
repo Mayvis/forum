@@ -6,10 +6,7 @@
             <div class="col-md-8">
                 <div class="card mb-3">
                     <div class="card-header">
-                        <h1>
-                            {{ $profileUser->name }}
-                            <small>since {{ $profileUser->created_at->diffForHumans() }}</small>
-                        </h1>
+                        <avatar-form :user="{{ $profileUser }}"></avatar-form>
                     </div>
                 </div>
 

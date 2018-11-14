@@ -10,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 /**
  * @property mixed id
  * @property mixed lastReply
+ * @property mixed avatar_path
  */
 class User extends Authenticatable
 {
@@ -31,7 +32,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'avatar_path',
     ];
 
     /**
@@ -40,7 +41,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'email'
+        'password', 'remember_token', 'email', 'email_verified_at'
     ];
 
     public function threads()
@@ -64,6 +65,11 @@ class User extends Authenticatable
             $this->visitedThreadCacheKey($thread),
             Carbon::now()
         );
+    }
+
+    public function getAvatarPathAttribute($avatar)
+    {
+         return $avatar ? '/storage/' . $avatar : '/images/avatars/default.png';
     }
 
     public function visitedThreadCacheKey($thread)
