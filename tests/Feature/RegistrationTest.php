@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Mail\PleaseConfirmedYourEmail;
 use App\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,7 +17,12 @@ class RegistrationTest extends TestCase
     {
         Mail::fake();
 
-        event(new Registered(create('App\User')));
+        $this->post('/register', [
+            'name' => 'LiangYu',
+            'email' => 'liang@example.com',
+            'password' => 'foobar',
+            'password_confirmation' => 'foobar',
+        ]);
 
         Mail::assertQueued(PleaseConfirmedYourEmail::class);
     }
@@ -28,7 +32,7 @@ class RegistrationTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->post('/register', [
+        $this->post(route('register'), [
             'name' => 'LiangYu',
             'email' => 'liang@example.com',
             'password' => 'foobar',
@@ -40,9 +44,17 @@ class RegistrationTest extends TestCase
         $this->assertFalse($user->confirmed);
         $this->assertNotNull($user->confirmation_token);
 
-        $this->get('/register/confirm?token=' . $user->confirmation_token)
+        $this->get(route('register.confirm', ['token' => $user->confirmation_token]))
             ->assertRedirect(route('threads'));
 
         $this->assertTrue($user->fresh()->confirmed);
+    }
+    
+    /** @test */
+    public function confirming_an_invalid_token()
+    {
+        $this->get(route('register.confirm'), ['token' => 'invalid'])
+            ->assertRedirect(route('threads'))
+            ->assertSessionHas('flash', 'Unknown token.');
     }
 }
