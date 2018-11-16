@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property mixed id
  * @property mixed lastReply
  * @property mixed avatar_path
+ * @property bool confirmed
  */
 class User extends Authenticatable
 {
@@ -44,6 +45,10 @@ class User extends Authenticatable
         'password', 'remember_token', 'email', 'email_verified_at'
     ];
 
+    protected $casts = [
+        'confirmed' => 'boolean'
+    ];
+
     public function threads()
     {
         return $this->hasMany(Thread::class);
@@ -65,6 +70,13 @@ class User extends Authenticatable
             $this->visitedThreadCacheKey($thread),
             Carbon::now()
         );
+    }
+
+    public function confirm()
+    {
+        $this->confirmed = true;
+
+        $this->save();
     }
 
     public function getAvatarPathAttribute($avatar)
