@@ -22,7 +22,7 @@ class CreateThreadsTest extends TestCase
         $this->post(route('threads'), [])
             ->assertRedirect(route('login'));
     }
-    
+
     /** @test */
     public function new_users_must_first_confirm_their_email_address_before_creating_thread()
     {
@@ -77,24 +77,34 @@ class CreateThreadsTest extends TestCase
         $this->publishThread(['channel_id' => 999])
             ->assertSessionHasErrors("channel_id");
     }
-    
+
     /** @test */
     public function a_thread_requires_a_unique_slug()
     {
         $this->withoutExceptionHandling()
             ->signIn();
 
-        $thread = create('App\Thread', ['title' => 'Foo title', 'slug' => 'foo-title']);
+        create('App\Thread', [], 2);
+
+        $thread = create('App\Thread', ['title' => 'Foo title']);
 
         $this->assertEquals($thread->fresh()->slug, 'foo-title');
 
-        $this->post(route('threads'), $thread->toArray());
+        $thread = $this->postJson(route('threads'), $thread->toArray())->json();
 
-        $this->assertTrue(Thread::whereSlug('foo-title-2')->exists());
+        $this->assertEquals("foo-title-{$thread['id']}", $thread['slug']);
+    }
 
-        $this->post(route('threads'), $thread->toArray());
+    /** @test */
+    public function a_thread_with_a_title_that_ends_in_a_number_should_generate_the_proper_slug()
+    {
+        $this->signIn();
 
-        $this->assertTrue(Thread::whereSlug('foo-title-3')->exists());
+        $thread = create('App\Thread', ['title' => 'Some Title 24']);
+
+        $thread = $this->postJson(route('threads'), $thread->toArray())->json();
+
+        $this->assertEquals("some-title-24-{$thread['id']}", $thread['slug']);
     }
 
     /** @test */
