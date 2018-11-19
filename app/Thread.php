@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed updated_at
  * @property mixed title
  * @property mixed slug
+ * @property mixed best_reply_id
  */
 class Thread extends Model
 {
@@ -173,5 +174,10 @@ class Thread extends Model
         }
 
         $this->attributes['slug'] = $slug;
+    }
+
+    public function markBestReply(Reply $reply)
+    {
+        $reply->thread->update(['best_reply_id' => $reply->id]);
     }
 }
