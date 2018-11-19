@@ -17,7 +17,7 @@ class RegistrationTest extends TestCase
     {
         Mail::fake();
 
-        $this->post('/register', [
+        $this->post(route('register'), [
             'name' => 'LiangYu',
             'email' => 'liang@example.com',
             'password' => 'foobar',

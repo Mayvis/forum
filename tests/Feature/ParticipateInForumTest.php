@@ -12,9 +12,9 @@ class ParticipateInForumTest extends TestCase
     /** @test */
     public function unauthenticated_user_may_not_add_replies()
     {
-        create('App\Thread');
+        $thread = create('App\Thread');
 
-        $this->post("threads/channel/1/replies", [])
+        $this->post("/threads/channel/{$thread->slug}/replies", [])
             ->assertRedirect('/login');
     }
 
