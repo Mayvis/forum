@@ -1,6 +1,6 @@
 <template>
     <div :id="'reply-' + id" class="card mb-3">
-        <div class="card-header">
+        <div class="card-header" :class="isBest ? 'bg' : ''">
             <div class="level">
                 <h6 class="flex">
                     <a :href="'/profiles/' + data.owner.name"
@@ -30,9 +30,13 @@
             <div v-else v-html="body"></div>
         </div>
 
-        <div class="card-footer level" v-if="canUpdate">
-            <button class="btn btn-sm mr-1" @click="editing = true">Edit</button>
-            <button class="btn btn-danger btn-sm mr-1" @click="destroy">Delete</button>
+        <div class="card-footer level">
+            <div v-if="canUpdate">
+                <button class="btn btn-sm mr-1" @click="editing = true">Edit</button>
+                <button class="btn btn-danger btn-sm mr-1" @click="destroy">Delete</button>
+            </div>
+
+            <button class="btn btn-default btn-sm ml-a" @click="markBestReply" v-show="!isBest">Best Reply?</button>
         </div>
 
     </div>
@@ -49,7 +53,8 @@
             return {
                 editing: false,
                 id: this.data.id,
-                body: this.data.body
+                body: this.data.body,
+                isBest: false
             }
         },
         computed: {
@@ -79,6 +84,9 @@
                 axios.delete('/replies/' + this.data.id);
 
                 this.$emit('deleted', this.data.id);
+            },
+            markBestReply() {
+                this.isBest = true;
             }
         },
     }
