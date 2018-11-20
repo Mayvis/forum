@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed title
  * @property mixed slug
  * @property mixed best_reply_id
+ * @property mixed locked
  */
 class Thread extends Model
 {
@@ -89,6 +90,11 @@ class Thread extends Model
         event(new ThreadReceivedNewReply($reply));
 
         return $reply;
+    }
+
+    public function lock()
+    {
+        $this->update(['locked' => true]);
     }
 
     /**

@@ -24,6 +24,8 @@ class RepliesController extends Controller
     }
 
     /**
+     * Persist a new reply.
+     *
      * @param $channelId
      * @param Thread $thread
      * @param CreatePostRequest $form
@@ -31,6 +33,10 @@ class RepliesController extends Controller
      */
     public function store($channelId, Thread $thread, CreatePostRequest $form)
     {
+        if ($thread->locked) {
+            return response('Thread is locked', 422);
+        }
+
         return $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id()
