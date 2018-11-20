@@ -30705,12 +30705,23 @@ window.Vue = __webpack_require__(163);
 /**
  * Authorized user
  */
+var authorizations = __webpack_require__(236);
 
-Vue.prototype.authorize = function (handler) {
-    var user = window.App.user;
+Vue.prototype.authorize = function () {
+    if (!window.App.signedIn) return false;
 
-    return user ? handler(user) : false;
+    for (var _len = arguments.length, params = Array(_len), _key = 0; _key < _len; _key++) {
+        params[_key] = arguments[_key];
+    }
+
+    if (typeof params[0] === "string") {
+        return authorizations[params[0]](params[1]);
+    }
+
+    return params[0](window.App.user);
 };
+
+Vue.prototype.signedIn = window.App.signedIn;
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -65320,23 +65331,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             editing: false,
             id: this.data.id,
             body: this.data.body,
-            isBest: false
+            isBest: false,
+            reply: this.data
         };
     },
 
     computed: {
         ago: function ago() {
             return __WEBPACK_IMPORTED_MODULE_1_moment___default()(this.data.created_at).fromNow();
-        },
-        signedIn: function signedIn() {
-            return window.App.signedIn;
-        },
-        canUpdate: function canUpdate() {
-            var _this = this;
-
-            return this.authorize(function (user) {
-                return _this.data.user_id === user.id;
-            });
         }
     },
     methods: {
@@ -65895,7 +65897,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-footer level" }, [
-        _vm.canUpdate
+        _vm.authorize("updateReply", _vm.reply)
           ? _c("div", [
               _c(
                 "button",
@@ -65932,7 +65934,7 @@ var render = function() {
                 expression: "!isBest"
               }
             ],
-            staticClass: "btn btn-default btn-sm ml-a",
+            staticClass: "btn btn-default btn-sm ml-auto",
             on: { click: _vm.markBestReply }
           },
           [_vm._v("Best Reply?")]
@@ -66037,7 +66039,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -66077,11 +66079,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             body: ''
         };
-    },
-    computed: {
-        signedIn: function signedIn() {
-            return window.App.signedIn;
-        }
     },
     mounted: function mounted() {
         $('#body').atwho({
@@ -68076,6 +68073,32 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */
+/***/ (function(module, exports) {
+
+var user = window.App.user;
+
+module.exports = {
+    updateReply: function updateReply(reply) {
+        return reply.user_id === user.id;
+    }
+};
 
 /***/ })
 /******/ ]);
