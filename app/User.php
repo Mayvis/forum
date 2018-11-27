@@ -13,6 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property mixed avatar_path
  * @property bool confirmed
  * @property null confirmation_token
+ * @property mixed name
  */
 class User extends Authenticatable
 {
@@ -80,6 +81,11 @@ class User extends Authenticatable
         $this->confirmation_token = null;
 
         $this->save();
+    }
+
+    public function isAdmin()
+    {
+        return in_array($this->name, ['LiangYu', 'Kevin']);
     }
 
     public function getAvatarPathAttribute($avatar)
