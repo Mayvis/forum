@@ -26,6 +26,8 @@ class Thread extends Model
 
     protected $appends = ['isSubscribedTo'];
 
+    protected $casts = ['locked' => 'boolean'];
+
     /**
      * When sql the thread also count the replies.
      *
@@ -90,11 +92,6 @@ class Thread extends Model
         event(new ThreadReceivedNewReply($reply));
 
         return $reply;
-    }
-
-    public function lock()
-    {
-        $this->update(['locked' => true]);
     }
 
     /**

@@ -13,10 +13,10 @@ Route::post('/threads', 'ThreadsController@store')->middleware('must-be-confirme
 Route::get('/threads/create', 'ThreadsController@create');
 Route::get('/threads/{channel}', 'ThreadsController@index');
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
-//Route::patch('/threads/{channel}/{thread}', 'ThreadsController@update')->name('threads.update');
 Route::delete('/threads/{channel}/{thread}', 'ThreadsController@destroy');
 
-Route::post('/lock-threads/{thread}', 'LockThreadsController@store')->name('locked-threads.store')->middleware('admin');
+Route::post('/locked-threads/{thread}', 'LockThreadsController@store')->name('locked-threads.store')->middleware('admin');
+Route::delete('/locked-threads/{thread}', 'LockThreadsController@destroy')->name('locked-threads.destroy')->middleware('admin');
 
 Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionController@store')->middleware('auth');
 Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionController@destroy')->middleware('auth');
