@@ -122,7 +122,7 @@ class CreateThreadsTest extends TestCase
 
         $this->assertEquals("some-title-24-{$thread['id']}", $thread['slug']);
     }
-
+    
     /** @test */
     public function unauthorized_users_may_not_delete_threads()
     {
