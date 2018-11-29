@@ -49,13 +49,12 @@ class RepliesController extends Controller
      * @param Reply $reply
      * @return void
      * @throws \Illuminate\Auth\Access\AuthorizationException
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Reply $reply)
     {
         $this->authorize('update', $reply);
 
-        $this->validate(request(), ['body' => 'required|spamfree']);
+        request()->validate(['body' => 'required|spamfree']);
 
         $reply->update(['body' => request('body')]);
     }
@@ -66,6 +65,7 @@ class RepliesController extends Controller
      * @param Reply $reply
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @throws \Exception
      */
     public function destroy(Reply $reply)
     {

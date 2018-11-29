@@ -9,6 +9,7 @@
             return {
                 repliesCount: this.thread.replies_counts,
                 locked: this.thread.locked,
+                editing: false
             }
         },
         methods: {
