@@ -4,24 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Thread;
 use App\Trending;
-use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
+    /**
+     * Show the search result.
+     * @param Trending $trending
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show(Trending $trending)
     {
-        config(['scout.driver' => 'algolia']);
-
-        $search = \request('q');
-
-        $threads = Thread::search($search)->paginate(25);
-
-        if (\request()->expectsJson()) {
-            return $threads;
+        if (request()->wantsJson()) {
+            return Thread::search(request('q'))->paginate('25');
         }
 
-        return view('threads.index', [
-            'threads' => $threads,
+        return view('threads.search', [
             'trending' => $trending->get()
         ]);
     }

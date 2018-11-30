@@ -6,7 +6,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::view('/scan', 'scan');
+//Route::view('/scan', 'scan');
 
 Route::get('/home', 'HomeController@index')->name('home');
 

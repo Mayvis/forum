@@ -33,6 +33,7 @@
         .flex { flex: 1; }
         .bg { background-color: #f7c6c5;}
         [v-cloak] { display: none; }
+        .ais-highlight > em { background-color: yellow; font-style: italic; }
     </style>
 
     @yield('header')
