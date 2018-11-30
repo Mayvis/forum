@@ -180,8 +180,19 @@ class Thread extends Model
         $this->attributes['slug'] = $slug;
     }
 
+    /**
+     * Mark the given reply as the best array.
+     *
+     * @param Reply $reply
+     */
     public function markBestReply(Reply $reply)
     {
         $reply->thread->update(['best_reply_id' => $reply->id]);
     }
+
+    public function toSearchableArray()
+    {
+        return $this->toArray() + ['path' => $this->path()];
+    }
+
 }
