@@ -88753,6 +88753,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -88782,6 +88783,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
+        remainTheSame: function remainTheSame() {
+            this.editing = false;
+
+            this.body = this.reply.body;
+        },
         update: function update() {
             axios.patch('/replies/' + this.id, {
                 body: this.body
@@ -89317,11 +89323,7 @@ var render = function() {
                     {
                       staticClass: "btn btn-sm btn-link",
                       attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.editing = false
-                        }
-                      }
+                      on: { click: _vm.remainTheSame }
                     },
                     [_vm._v("Cancel")]
                   )

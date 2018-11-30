@@ -24,7 +24,8 @@
                     </div>
 
                     <button class="btn btn-sm btn-primary">Update</button>
-                    <button class="btn btn-sm btn-link" @click="editing = false" type="button">Cancel</button>
+                    <button class="btn btn-sm btn-link" @click="remainTheSame" type="button">Cancel</button>
+                    <!--<button class="btn btn-sm btn-link" @click="editing = false" type="button">Cancel</button>-->
                 </form>
             </div>
 
@@ -71,6 +72,11 @@
             },
         },
         methods: {
+            remainTheSame() {
+                this.editing = false;
+
+                this.body = this.reply.body;
+            },
             update() {
                 axios.patch('/replies/' + this.id, {
                     body: this.body

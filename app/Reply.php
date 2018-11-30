@@ -100,6 +100,12 @@ class Reply extends Model
         return $this->isBest();
     }
 
+    /**
+     * Sanitize the body.
+     *
+     * @param $body
+     * @return mixed
+     */
     public function getBodyAttribute($body)
     {
         return Purify::clean($body);

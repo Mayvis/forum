@@ -197,7 +197,7 @@ class Thread extends Model
     }
 
     /**
-     * Purify the body.
+     * Sanitize the body.
      *
      * @param $body
      * @return mixed
