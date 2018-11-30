@@ -5,6 +5,7 @@ namespace App;
 use App\Events\ThreadReceivedNewReply;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
+use Stevebauman\Purify\Facades\Purify;
 
 /**
  * @property mixed id
@@ -195,4 +196,14 @@ class Thread extends Model
         return $this->toArray() + ['path' => $this->path()];
     }
 
+    /**
+     * Purify the body.
+     *
+     * @param $body
+     * @return mixed
+     */
+    public function getBodyAttribute($body)
+    {
+        return Purify::clean($body);
+    }
 }
