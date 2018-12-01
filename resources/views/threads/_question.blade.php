@@ -9,7 +9,6 @@
     <div class="card-body">
         <div class="form-group">
             <wysiwyg v-model="form.body" :value="form.body"></wysiwyg>
-            {{--<textarea name="body" id="body" cols="30" rows="10" class="form-control" v-model="form.body"></textarea>--}}
         </div>
     </div>
 
@@ -39,7 +38,9 @@
                  width="25" height="25" class="mr-1">
 
             <span class="flex">
-                <a href="{{ route('profile', $thread->creator->name) }}">{{ $thread->creator->name }}</a> posted:
+                <a href="{{ route('profile', $thread->creator->name) }}">
+                    {{ $thread->creator->name }} ({{ $thread->creator->reputation }} XP)
+                </a> posted:
                 <span v-text="title"></span>
             </span>
         </div>
