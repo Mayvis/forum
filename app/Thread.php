@@ -45,6 +45,8 @@ class Thread extends Model
 
         static::created(function ($thread) {
             $thread->update(['slug' => $thread->title]);
+
+            $thread->creator->increment('reputation', 10);
         });
     }
 
@@ -178,7 +180,7 @@ class Thread extends Model
             $slug = "{$slug}-" . $this->id;
         }
 
-        $this->attributes['slug'] = $slug;
+        return $this->attributes['slug'] = $slug;
     }
 
     /**
@@ -189,6 +191,8 @@ class Thread extends Model
     public function markBestReply(Reply $reply)
     {
         $reply->thread->update(['best_reply_id' => $reply->id]);
+
+        $reply->owner->increment('reputation', 50);
     }
 
     public function toSearchableArray()

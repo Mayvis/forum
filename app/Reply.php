@@ -13,6 +13,7 @@ use Stevebauman\Purify\Facades\Purify;
  * @property mixed user_id
  * @property mixed created_at
  * @property mixed body
+ * @property mixed owner
  */
 class Reply extends Model
 {
@@ -30,6 +31,8 @@ class Reply extends Model
 
         static::created(function ($reply) {
             $reply->thread->increment('replies_count');
+
+            $reply->owner()->increment('reputation', 2);
         });
 
         static::deleted(function ($reply) {
