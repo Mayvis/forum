@@ -1,10 +1,11 @@
 <script>
     import Replies from '../components/Replies.vue';
+    import Highlight from '../components/Highlight.vue';
     import SubscribeButton from '../components/SubscribeButton.vue';
 
     export default {
         props: ['thread'],
-        components: {Replies, SubscribeButton},
+        components: {Replies, SubscribeButton, Highlight},
         data() {
             return {
                 repliesCount: this.thread.replies_counts,

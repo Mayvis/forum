@@ -29,7 +29,9 @@
                 </form>
             </div>
 
-            <div v-else v-html="body"></div>
+            <div v-else ref="body">
+                <highlight :content="body"></highlight>
+            </div>
         </div>
 
         <div class="card-footer level" v-if="authorize('owns', reply) || authorize('owns', reply.thread)">
@@ -48,11 +50,12 @@
 
 <script>
     import Favorite from './Favorite.vue';
+    import Highlight from './Highlight.vue';
     import moment from 'moment';
 
     export default {
         props: ['reply'],
-        components: {Favorite},
+        components: {Favorite, Highlight},
         data() {
             return {
                 editing: false,

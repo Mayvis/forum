@@ -9,7 +9,7 @@ class ThreadFilters extends Filters
     protected $filters = ['by', 'popular', 'unanswered'];
 
     /**
-     * Filter a query by a given username.
+     * Filter a query by a given username
      *
      * @param string $username
      * @return $this
@@ -22,7 +22,7 @@ class ThreadFilters extends Filters
     }
 
     /**
-     * Filter the query according to most popular threads.
+     * Filter the query according to most popular threads
      *
      * @return $this
      */

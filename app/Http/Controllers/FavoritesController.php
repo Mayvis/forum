@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Reply;
 use App\Favorite;
+use App\Reply;
 
 class FavoritesController extends Controller
 {
@@ -16,7 +16,7 @@ class FavoritesController extends Controller
     }
 
     /**
-     * Store a new favorite in the database.
+     * Store a new favorite in the database
      *
      * @param Reply $reply
      * @return \Illuminate\Http\RedirectResponse

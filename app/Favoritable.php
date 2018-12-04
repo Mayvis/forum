@@ -2,8 +2,10 @@
 
 namespace App;
 
+
 trait Favoritable
 {
+
     /**
      * When deleting model, also delete favorite.
      */
@@ -17,11 +19,11 @@ trait Favoritable
     /**
      * Determine if the current reply has been favorited.
      *
-     * @return bool
+     * @return boolean
      */
     public function isFavorited()
     {
-        return (bool) $this->favorites->where('user_id', auth()->id())->count();
+        return !!$this->favorites->where('user_id', auth()->id())->count();
     }
 
     public function getIsFavoritedAttribute()
@@ -32,7 +34,7 @@ trait Favoritable
     /**
      * Get the number of favorites for the reply.
      *
-     * @return int
+     * @return integer
      */
     public function getFavoritesCountAttribute()
     {
@@ -54,7 +56,7 @@ trait Favoritable
     {
         $attributes = ['user_id' => auth()->id()];
 
-        if (! $this->favorites()->where($attributes)->exists()) {
+        if (!$this->favorites()->where($attributes)->exists()) {
             Reputation::award(auth()->user(), Reputation::REPLY_FAVORITED);
 
             $this->favorites()->create($attributes);

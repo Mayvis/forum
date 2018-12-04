@@ -7,7 +7,7 @@ use Exception;
 class InvalidKeywords
 {
     protected $keywords = [
-        'yahoo customer support',
+        'yahoo customer support'
     ];
 
     /**
