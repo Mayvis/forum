@@ -12,6 +12,7 @@ npm-debug.log
 yarn-error.log
 .env
 .env.example
+.env.travis
 .phpunit.result.cache
 .editorconfig
 tags
