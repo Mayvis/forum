@@ -43,11 +43,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'email', 'email_verified_at'
+        'password', 'remember_token', 'email', 'email_verified_at',
     ];
 
     protected $casts = [
-        'confirmed' => 'boolean'
+        'confirmed' => 'boolean',
     ];
 
     public function threads()
@@ -84,11 +84,11 @@ class User extends Authenticatable
 
     public function getAvatarPathAttribute($avatar)
     {
-         return $avatar ? '/storage/' . $avatar : '/images/avatars/default.png';
+        return $avatar ? '/storage/'.$avatar : '/images/avatars/default.png';
     }
 
     public function visitedThreadCacheKey($thread)
     {
-        return sprintf("users.%s.visits.%s", $this->id, $thread->id);
+        return sprintf('users.%s.visits.%s', $this->id, $thread->id);
     }
 }
