@@ -1,0 +1,71 @@
+<template>
+    <li class="nav-item dropdown" :class="{open: toggle}">
+        <a href="#"
+           class="nav-link dropdown-toggle"
+           id="navbarDropdown"
+           role="button"
+           data-toggle="dropdown"
+           aria-haspopup="true"
+           aria-expanded="false"
+           @click.prevent="toggle = !toggle"
+        >
+            Channels
+        </a>
+
+        <div class="dropdown-menu channel-dropdown">
+            <div class="input-wrapper">
+                <input type="text"
+                       class="form-control"
+                       placeholder="Filter Channels..."
+                       v-model="filter"/>
+            </div>
+
+            <ul class="list-group channel-list">
+                <li class="list-group-item" v-for="channel in filteredThreads">
+                    <a :href="`/threads/${channel.slug}`" v-text="channel.name"></a>
+                </li>
+            </ul>
+        </div>
+    </li>
+</template>
+
+<script>
+    export default {
+        props: ['channels'],
+        data() {
+            return {
+                toggle: false,
+                filter: ''
+            }
+        },
+        computed: {
+            filteredThreads() {
+                return this.channels.filter(channel => {
+                    return channel.name.toLowerCase().startsWith(this.filter.toLocaleLowerCase())
+                })
+            }
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .channel-dropdown {
+        padding: 0;
+    }
+
+    .input-wrapper {
+        padding: .5rem 1rem;
+    }
+
+    .channel-list {
+        max-height: 400px;
+        overflow: auto;
+        margin-bottom: 0;
+
+        .list-group-item {
+            border-radius: 0;
+            border-left: none;
+            border-right: none;
+        }
+    }
+</style>

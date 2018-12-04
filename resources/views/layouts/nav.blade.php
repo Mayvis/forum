@@ -35,17 +35,8 @@
                     <a href="/threads/create" class="nav-link">New Threads</a>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Channels
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @foreach($channels as $channel)
-                            <a class="dropdown-item" href="/threads/{{ $channel->slug }}">{{ $channel->name }}</a>
-                        @endforeach
-                    </div>
-                </li>
+                <channel-dropdown :channels="{{ $channels }}"></channel-dropdown>
+
             </ul>
 
             <!-- Right Side Of Navbar -->
