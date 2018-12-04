@@ -4,7 +4,6 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
@@ -81,16 +80,6 @@ class User extends Authenticatable
         $this->confirmation_token = null;
 
         $this->save();
-    }
-
-    /**
-     * Determine if the user is an admin.
-     *
-     * @return bool
-     */
-    public function isAdmin()
-    {
-        return in_array($this->name, ['LiangYu', 'Kevin']);
     }
 
     public function getAvatarPathAttribute($avatar)

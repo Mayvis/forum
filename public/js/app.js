@@ -87261,7 +87261,8 @@ module.exports = {
         return model[prop] === user.id;
     },
     isAdmin: function isAdmin() {
-        return ['LiangYu', 'Kevin'].includes(user.name);
+        // return ['LiangYu', 'Kevin'].includes(user.name);
+        return user.isAdmin;
     }
 };
 

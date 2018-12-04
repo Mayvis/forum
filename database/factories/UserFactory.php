@@ -36,9 +36,15 @@ $factory->state(App\User::class, 'unconfirmed', function () {
 
 $factory->state(App\User::class, 'administrator', function () {
     return [
-        'name' => 'LiangYu'
+        'isAdmin' => true
     ];
 });
+
+//$factory->state(App\User::class, 'administrator', function () {
+//    return [
+//        'name' => 'LiangYu'
+//    ];
+//});
 
 $factory->define(App\Thread::class, function (Faker $faker) {
     $title = $faker->sentence;
@@ -63,7 +69,8 @@ $factory->define(App\Channel::class, function (Faker $faker) {
 
     return [
         'name' => $name,
-        'slug' => $name
+        'slug' => $name,
+        'description' => $faker->sentence
     ];
 });
 
