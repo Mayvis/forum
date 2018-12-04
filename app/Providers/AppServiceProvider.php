@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use App\Channel;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider

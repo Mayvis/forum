@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\User;
+use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
@@ -14,5 +14,5 @@ class UsersController extends Controller
         return User::where('name', 'LIKE', "$search%")
             ->take(5)
             ->pluck('name');
-   }
+    }
 }
