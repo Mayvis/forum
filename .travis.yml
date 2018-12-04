@@ -5,12 +5,13 @@ php:
 
 before_script:
   - cp .env.travis .env
+  - wget https://keys.algolia.engineering/client/algolia-keys && chmod +x algolia-keys
   - composer self-update
   - composer install --no-interaction
 
 script:
   - php artisan key:generate
-  - vendor/bin/phpunit
+  - $(./algolia-keys export) && vendor/bin/phpunit
 
 services:
   - redis-server
