@@ -18,6 +18,11 @@ class ChannelsController extends Controller
         return view('admin.channels.create');
     }
 
+    public function edit(Channel $channel)
+    {
+        return view('admin.channels.edit', compact('channel'));
+    }
+
     public function store()
     {
         $data = request()->validate([
@@ -35,5 +40,31 @@ class ChannelsController extends Controller
 
         return redirect(route('admin.channels.index'))
             ->with('flash', 'Your channel has been created!');
+    }
+
+    /**
+     * Update an existing channel.
+     *
+     * @param Channel $channel
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @throws \Exception
+     */
+    public function update(Channel $channel)
+    {
+        $channel->update(
+            request()->validate([
+                'name' => 'required|unique:channels',
+                'description' => 'required',
+            ])
+        );
+
+        cache()->forget('channels');
+
+        if (request()->wantsJson()) {
+            return response($channel, 200);
+        }
+
+        return redirect(route('admin.channels.index'))
+            ->with('flash', 'Your channel has been updated!');
     }
 }

@@ -68,4 +68,28 @@ class ChannelAdministrationTest extends TestCase
 
         return $this->post(route('admin.channels.store'), $channel->toArray());
     }
+    
+    /** @test */
+    public function an_administrator_can_edit_an_existing_channel()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->signInAdmin();
+
+        $channel = create('App\Channel');
+
+        $updated_data = [
+            'name' => 'foo',
+            'description' => 'bar',
+        ];
+
+        $this->patch(
+            route('admin.channels.update', ['channel' => $channel->slug]),
+            $updated_data
+        );
+
+        $this->get(route('admin.dashboard.index'))
+            ->assertSee($updated_data['name'])
+            ->assertSee($updated_data['description']);
+    }
 }

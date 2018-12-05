@@ -45,6 +45,10 @@ Route::get('/register/confirm', 'Auth\RegisterConfirmationController@index')->na
 Route::get('/api/users', 'Api\UsersController@index');
 Route::post('/api/users/{user}/avatars', 'Api\UserAvatarController@store')->middleware('auth')->name('avatars');
 
+Route::post('/pinned-threads/{thread}', 'PinnedThreadsController@store')->name('pinned-threads.store')->middleware('admin');
+Route::delete('/pinned-threads/{thread}', 'PinnedThreadsController@destroy')->name('pinned-threads.destroy')->middleware('admin');
+
+
 Route::group([
     'prefix' => 'admin',
     'middleware' => 'admin',
@@ -54,7 +58,6 @@ Route::group([
     Route::post('/channels', 'ChannelsController@store')->name('admin.channels.store');
     Route::get('/channels', 'ChannelsController@index')->name('admin.channels.index');
     Route::get('/channels/create', 'ChannelsController@create')->name('admin.channels.create');
+    Route::get('/channels/{channel}/edit', 'ChannelsController@edit')->name('admin.channels.edit');
+    Route::patch('/channels/{channel}', 'ChannelsController@update')->name('admin.channels.update');
 });
-
-Route::post('/pinned-threads/{thread}', 'PinnedThreadsController@store')->name('pinned-threads.store')->middleware('admin');
-Route::delete('/pinned-threads/{thread}', 'PinnedThreadsController@destroy')->name('pinned-threads.destroy')->middleware('admin');
