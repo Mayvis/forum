@@ -21,5 +21,4 @@ class ThreadReceivedNewReply
     {
         $this->reply = $reply;
     }
-
 }

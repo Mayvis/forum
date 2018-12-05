@@ -12,7 +12,7 @@ class Channel extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'archived' => 'boolean'
+        'archived' => 'boolean',
     ];
 
     /**

@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 
 abstract class Filters
 {
+    protected $request;
+    protected $builder;
 
-    protected $request, $builder;
-
-    protected $filters= [];
+    protected $filters = [];
 
     /**
      * ThreadFilters constructor.

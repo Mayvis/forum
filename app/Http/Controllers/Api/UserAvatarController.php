@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 
 class UserAvatarController extends Controller
 {
-
     /**
      * Store a new user avatar.
      *
@@ -15,14 +14,13 @@ class UserAvatarController extends Controller
     public function store()
     {
         \request()->validate([
-            'avatars' => ['required', 'image']
+            'avatars' => ['required', 'image'],
         ]);
 
         auth()->user()->update([
-            'avatar_path' => \request()->file('avatars')->store('avatars', 'public')
+            'avatar_path' => \request()->file('avatars')->store('avatars', 'public'),
         ]);
 
         return response([], 204);
-
     }
 }

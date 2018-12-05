@@ -2,13 +2,13 @@
 
 namespace App;
 
-
 trait RecordsActivity
 {
-
     protected static function bootRecordsActivity()
     {
-        if (auth()->guest()) return;
+        if (auth()->guest()) {
+            return;
+        }
 
         foreach (static::getActivitiesToRecord() as $event) {
             static::$event(function ($model) use ($event) {
@@ -30,7 +30,7 @@ trait RecordsActivity
     {
         $this->activity()->create([
             'user_id' => auth()->id(),
-            'type' => $this->getActivityType($event)
+            'type' => $this->getActivityType($event),
         ]);
     }
 
