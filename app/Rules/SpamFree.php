@@ -5,7 +5,7 @@ namespace App\Rules;
 use App\Inspections\Spam;
 use Illuminate\Contracts\Validation\Rule;
 
-class spamFree implements Rule
+class SpamFree implements Rule
 {
     /**
      * Create a new rule instance.
@@ -27,7 +27,7 @@ class spamFree implements Rule
     public function passes($attribute, $value)
     {
         try {
-            return !resolve(Spam::class)->detect($value);
+            return ! resolve(Spam::class)->detect($value);
         } catch (\Exception $e) {
             return false;
         }

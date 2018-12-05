@@ -1,7 +1,6 @@
 <?php
 
 use Faker\Generator as Faker;
-use Faker\Provider\Uuid;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +13,7 @@ use Faker\Provider\Uuid;
 |
 */
 
-
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+/* @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker $faker) {
     static $password;
 
@@ -24,19 +22,19 @@ $factory->define(App\User::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'), // secret
         'remember_token' => str_random(10),
-        'confirmed' => true
+        'confirmed' => true,
     ];
 });
 
 $factory->state(App\User::class, 'unconfirmed', function () {
     return [
-        'confirmed' => false
+        'confirmed' => false,
     ];
 });
 
 $factory->state(App\User::class, 'administrator', function () {
     return [
-        'isAdmin' => true
+        'isAdmin' => true,
     ];
 });
 
@@ -84,7 +82,7 @@ $factory->define(App\Reply::class, function (Faker $faker) {
         'thread_id' => function () {
             return factory('App\Thread')->create()->id;
         },
-        'body' => $faker->paragraph
+        'body' => $faker->paragraph,
     ];
 });
 
@@ -96,6 +94,6 @@ $factory->define(\Illuminate\Notifications\DatabaseNotification::class, function
             return auth()->id() ?: factory('App\User')->create()->id;
         },
         'notifiable_type' => 'App\User',
-        'data' => ['foo' => 'bar']
+        'data' => ['foo' => 'bar'],
     ];
 });

@@ -2,10 +2,10 @@
 
 namespace App;
 
-use App\Events\ThreadReceivedNewReply;
-use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
+use App\Events\ThreadReceivedNewReply;
 use Stevebauman\Purify\Facades\Purify;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property mixed id
@@ -30,7 +30,7 @@ class Thread extends Model
 
     protected $casts = [
         'locked' => 'boolean',
-        'pinned' => 'boolean'
+        'pinned' => 'boolean',
     ];
 
     /**
@@ -120,7 +120,7 @@ class Thread extends Model
     public function subscribe($userId = null)
     {
         $this->subscriptions()->create([
-            'user_id' => $userId ?: auth()->id()
+            'user_id' => $userId ?: auth()->id(),
         ]);
 
         return $this;
@@ -182,7 +182,7 @@ class Thread extends Model
         $slug = str_slug($value);
 
         while (static::whereSlug($slug)->exists()) {
-            $slug = "{$slug}-" . $this->id;
+            $slug = "{$slug}-".$this->id;
         }
 
         return $this->attributes['slug'] = $slug;
