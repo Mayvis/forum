@@ -81,6 +81,7 @@ class ChannelAdministrationTest extends TestCase
         $updated_data = [
             'name' => 'foo',
             'description' => 'bar',
+            'archived' => false
         ];
 
         $this->patch(
@@ -88,7 +89,7 @@ class ChannelAdministrationTest extends TestCase
             $updated_data
         );
 
-        $this->get(route('admin.dashboard.index'))
+        $this->get(route('admin.channels.index'))
             ->assertSee($updated_data['name'])
             ->assertSee($updated_data['description']);
     }
