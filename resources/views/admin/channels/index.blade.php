@@ -16,13 +16,14 @@
         </thead>
         <tbody>
         @forelse($channels as $channel)
-            <tr>
+            <tr class="{{ $channel->archived ? 'bg-info' : '' }}">
                 <td>{{ $channel->name }}</td>
                 <td>{{ $channel->slug }}</td>
                 <td>{{ $channel->description }}</td>
                 <td>{{ $channel->threads()->count() }}</td>
                 <td>
-                    <a href="{{ route('admin.channels.edit', $channel->slug) }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <a href="{{ route('admin.channels.edit', $channel->slug) }}"
+                       class="btn btn-secondary btn-sm">Edit</a>
                 </td>
             </tr>
         @empty

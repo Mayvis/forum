@@ -68,7 +68,7 @@ class ChannelAdministrationTest extends TestCase
 
         return $this->post(route('admin.channels.store'), $channel->toArray());
     }
-    
+
     /** @test */
     public function an_administrator_can_edit_an_existing_channel()
     {
@@ -91,5 +91,25 @@ class ChannelAdministrationTest extends TestCase
         $this->get(route('admin.dashboard.index'))
             ->assertSee($updated_data['name'])
             ->assertSee($updated_data['description']);
+    }
+
+    /** @test */
+    public function an_administrator_can_mark_an_existing_channel_as_archived()
+    {
+        $this->signInAdmin();
+
+        $channel = create('App\Channel');
+
+        $this->assertFalse($channel->archived);
+
+        $this->patch(route('admin.channels.update', ['channel' => $channel->slug]),
+            $updatedChannel = [
+                'name' => 'foo',
+                'description' => 'bar',
+                'archived' => true,
+            ]
+        );
+
+        $this->assertTrue($channel->fresh()->archived);
     }
 }
