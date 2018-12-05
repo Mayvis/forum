@@ -88785,6 +88785,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             locked: this.thread.locked,
             title: this.thread.title,
             body: this.thread.body,
+            pinned: this.thread.pinned,
             form: {},
             editing: false
         };
@@ -88794,12 +88795,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        togglePin: function togglePin() {
+            var uri = '/pinned-threads/' + this.thread.slug;
+
+            axios[this.pinned ? 'delete' : 'post'](uri);
+
+            this.pinned = !this.pinned;
+        },
         toggleLock: function toggleLock() {
             var uri = '/locked-threads/' + this.thread.slug;
 
             axios[this.locked ? 'delete' : 'post'](uri);
 
             this.locked = !this.locked;
+        },
+        classes: function classes(target) {
+            return ['btn', target ? 'btn-primary' : 'btn-default'];
         },
         update: function update() {
             var _this = this;

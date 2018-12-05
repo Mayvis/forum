@@ -28,7 +28,10 @@ class Thread extends Model
 
     protected $appends = ['isSubscribedTo'];
 
-    protected $casts = ['locked' => 'boolean'];
+    protected $casts = [
+        'locked' => 'boolean',
+        'pinned' => 'boolean'
+    ];
 
     /**
      * When sql the thread also count the replies.

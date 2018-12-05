@@ -12,6 +12,7 @@
                 locked: this.thread.locked,
                 title: this.thread.title,
                 body: this.thread.body,
+                pinned: this.thread.pinned,
                 form: {},
                 editing: false
             }
@@ -20,12 +21,25 @@
             this.resetForm();
         },
         methods: {
+            togglePin() {
+                let uri = `/pinned-threads/${this.thread.slug}`;
+
+                axios[this.pinned ? 'delete' : 'post'](uri);
+
+                this.pinned = !this.pinned;
+            },
             toggleLock() {
                 let uri = `/locked-threads/${this.thread.slug}`;
 
                 axios[this.locked ? 'delete' : 'post'](uri);
 
                 this.locked = !this.locked;
+            },
+            classes(target) {
+                return [
+                    'btn',
+                    target ? 'btn-primary' : 'btn-default'
+                ];
             },
             update() {
                 let uri = `/threads/${this.thread.channel.slug}/${this.thread.slug}`;

@@ -4,6 +4,9 @@
             <div class="level">
                 <div class="flex">
                     <h4>
+                        @if ($thread->pinned)
+                            <span class="fas fa-map-pin" aria-hidden="true"></span>
+                        @endif
                         <a href="{{ $thread->path() }}">
                             @if(auth()->check() && $thread->hasUpdatesFor(auth()->user()))
                                 <strong>
