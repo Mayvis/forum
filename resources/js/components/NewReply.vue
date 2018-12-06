@@ -21,7 +21,6 @@
         data() {
             return {
                 body: '',
-                completed: false,
             }
         },
         mounted() {
