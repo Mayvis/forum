@@ -26,7 +26,7 @@ class FavoritesTest extends TestCase
         $reply = create('App\Reply');
 
         $this->withoutExceptionHandling()
-            ->post('/replies/' . $reply->id . '/favorites');
+            ->post(route('replies.favorite', $reply->id));
 
         $this->assertCount(1, $reply->favorites);
     }
@@ -40,7 +40,7 @@ class FavoritesTest extends TestCase
 
         $reply->favorites();
 
-        $this->delete('/replies/' . $reply->id . '/favorites');
+        $this->delete(route('replies.unfavorite', $reply->id));
         $this->assertCount(0, $reply->favorites);
     }
 
@@ -53,8 +53,8 @@ class FavoritesTest extends TestCase
 
         try {
             $this->withoutExceptionHandling();
-            $this->post('/replies/' . $reply->id . '/favorites');
-            $this->post('/replies/' . $reply->id . '/favorites');
+            $this->post(route('replies.favorite', $reply->id));
+            $this->post(route('replies.favorite', $reply->id));
         } catch (\Exception $e) {
             $this->fail('Did not except to insert the same record set twice');
         }

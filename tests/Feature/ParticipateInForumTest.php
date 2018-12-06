@@ -95,11 +95,11 @@ class ParticipateInForumTest extends TestCase
 
         $reply = create('App\Reply');
 
-        $this->patch("/replies/{$reply->id}")
+        $this->patch(route('replies.update', $reply->id))
             ->assertRedirect('/login');
 
         $this->signIn()
-            ->patch("/replies/{$reply->id}")
+            ->patch(route('replies.update', $reply->id))
             ->assertStatus(403);
     }
 
