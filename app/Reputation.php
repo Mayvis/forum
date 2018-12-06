@@ -15,7 +15,7 @@ class Reputation
      * @param $user
      * @param $points
      */
-    public static function award($user, $points)
+    public static function gain($user, $points)
     {
         $user->increment('reputation', $points);
     }
@@ -26,7 +26,7 @@ class Reputation
      * @param $user
      * @param $points
      */
-    public static function reduce($user, $points)
+    public static function lose($user, $points)
     {
         $user->decrement('reputation', $points);
     }
