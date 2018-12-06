@@ -51,6 +51,19 @@ class ThreadTest extends TestCase
         $this->assertCount(1, $this->thread->replies);
     }
 
+    /** test */
+    public function a_thread_can_have_a_best_reply()
+    {
+        $reply = $this->thread->addReply([
+            'body' => 'Foobar',
+            'user_id' => 1
+        ]);
+
+        $this->thread->markBestReply($reply);
+
+        $this->assertEquals($reply->id, $this->thread->bestReply->id);
+    }
+
     /** @test */
     public function a_thread_notifies_all_registered_subscribers_when_a_reply_is_added()
     {
@@ -124,7 +137,7 @@ class ThreadTest extends TestCase
             $this->assertFalse($thread->hasUpdatesFor($user));
         });
     }
-    
+
     /** @test */
     public function a_thread_body_is_sanitized_automatically()
     {
