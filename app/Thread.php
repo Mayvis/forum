@@ -85,12 +85,20 @@ class Thread extends Model
         return $this->belongsTo(Channel::class);
     }
 
+    /**
+     * A thread may have many replies.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function replies()
     {
         return $this->hasMany(Reply::class);
     }
 
     /**
+    /**
+     * Add a reply to the thread.
+     *
      * @param $reply
      * @return Model
      */
@@ -104,6 +112,8 @@ class Thread extends Model
     }
 
     /**
+     * Apply all relevant thread filters.
+     *
      * @param $query
      * @param $threadFilters
      * @return mixed
@@ -114,6 +124,8 @@ class Thread extends Model
     }
 
     /**
+     * Subscribe a user to the current thread.
+     *
      * @param null $userId
      * @return $this
      */
@@ -127,6 +139,8 @@ class Thread extends Model
     }
 
     /**
+     * Unsubscribe a user from the current thread.
+     *
      * @param null $userId
      */
     public function unsubscribe($userId = null)
@@ -137,6 +151,8 @@ class Thread extends Model
     }
 
     /**
+     * A thread can have many subscriptions.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function subscriptions()
@@ -145,6 +161,7 @@ class Thread extends Model
     }
 
     /**
+     * Determine if the current user is subscribed to the thread.
      * @return bool
      */
     public function getIsSubscribedToAttribute()
@@ -155,6 +172,8 @@ class Thread extends Model
     }
 
     /**
+     * Determine if the thread has been updated since the user last read it.
+     *
      * @param $user
      * @return bool
      * @throws \Exception
@@ -166,6 +185,11 @@ class Thread extends Model
         return $this->updated_at > cache($key);
     }
 
+    /**
+     * Get the route key name.
+     *
+     * @return string
+     */
     public function getRouteKeyName()
     {
         return 'slug';
@@ -200,6 +224,11 @@ class Thread extends Model
         Reputation::award($reply->owner, Reputation::BEST_REPLY_AWARDED);
     }
 
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
     public function toSearchableArray()
     {
         return $this->toArray() + ['path' => $this->path()];
