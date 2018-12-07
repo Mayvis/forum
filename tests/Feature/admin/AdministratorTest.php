@@ -13,9 +13,7 @@ class AdministratorTest extends TestCase
     /** @test */
     public function an_administrator_can_access_the_administration_section()
     {
-        $administrator = factory('App\User')->states('administrator')->create();
-
-        $this->actingAs($administrator)
+        $this->signInAdmin()
             ->get(route('admin.dashboard.index'))
             ->assertStatus(Response::HTTP_OK);
     }

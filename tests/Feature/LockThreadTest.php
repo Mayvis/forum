@@ -27,7 +27,7 @@ class LockThreadTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->signIn(factory('App\User')->states('administrator')->create());
+        $this->signInAdmin();
 
         $thread = create('App\Thread', ['user_id' => auth()->id()]);
 
@@ -41,7 +41,7 @@ class LockThreadTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->signIn(factory('App\User')->states('administrator')->create());
+        $this->signInAdmin();
 
         $thread = create('App\Thread', ['user_id' => auth()->id(), 'locked' => true]);
 

@@ -43,6 +43,8 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_can_add_a_reply()
     {
+        $this->signIn();
+
         $this->thread->addReply([
             'body' => 'foobar',
             'user_id' => 2

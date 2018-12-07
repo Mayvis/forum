@@ -19,6 +19,7 @@ $factory->define(App\User::class, function (Faker $faker) {
 
     return [
         'name' => $faker->name,
+        'username' => $faker->unique()->userName,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'), // secret
         'remember_token' => str_random(10),
@@ -31,18 +32,6 @@ $factory->state(App\User::class, 'unconfirmed', function () {
         'confirmed' => false,
     ];
 });
-
-$factory->state(App\User::class, 'administrator', function () {
-    return [
-        'isAdmin' => true,
-    ];
-});
-
-//$factory->state(App\User::class, 'administrator', function () {
-//    return [
-//        'name' => 'LiangYu'
-//    ];
-//});
 
 $factory->define(App\Thread::class, function (Faker $faker) {
     $title = $faker->sentence;

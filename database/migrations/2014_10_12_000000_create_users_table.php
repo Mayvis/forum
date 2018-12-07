@@ -16,7 +16,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->unique();
+            $table->string('name')->nullable();
+            $table->string('username')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -24,21 +25,9 @@ class CreateUsersTable extends Migration
             $table->string('avatar_path')->nullable();
             $table->boolean('confirmed')->default(false);
             $table->string('confirmation_token', 25)->nullable()->unique();
-            $table->boolean('isAdmin')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
-
-        DB::table('users')
-            ->insert(
-                [
-                    'name' => 'admin',
-                    'email' => 'admin@example.com',
-                    'password' => bcrypt('admin'),
-                    'isAdmin' => true,
-                    'confirmed' => 1,
-                ]
-            );
     }
 
     /**

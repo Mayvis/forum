@@ -62,7 +62,7 @@ class NotificationsTest extends TestCase
         tap(auth()->user(), function ($user) {
             $this->assertCount(1, $user->unreadNotifications);
 
-            $this->delete(route('user-notifications.destroy', [$user->name, $user->unreadNotifications->first()->id]));
+            $this->delete(route('user-notifications.destroy', [$user->username, $user->unreadNotifications->first()->id]));
 
             $this->assertCount(0, $user->fresh()->unreadNotifications);
         });

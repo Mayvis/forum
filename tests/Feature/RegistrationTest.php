@@ -15,11 +15,14 @@ class RegistrationTest extends TestCase
     /** @test */
     public function a_confirmation_email_is_sent_upon_registration()
     {
+        $this->withoutExceptionHandling();
+
         Mail::fake();
 
-        $this->post(route('register'), [
+        $this->post('/register', [
             'name' => 'LiangYu',
-            'email' => 'liang@example.com',
+            'username' => 'LiangYu',
+            'email' => 'liangyu@test.com',
             'password' => 'foobar',
             'password_confirmation' => 'foobar',
         ]);
@@ -34,7 +37,8 @@ class RegistrationTest extends TestCase
 
         $this->post(route('register'), [
             'name' => 'LiangYu',
-            'email' => 'liang@example.com',
+            'username' => 'LiangYu',
+            'email' => 'liangyu@test.com',
             'password' => 'foobar',
             'password_confirmation' => 'foobar',
         ]);

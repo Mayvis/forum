@@ -13,20 +13,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property bool confirmed
  * @property null confirmation_token
  * @property mixed name
+ * @property mixed email
  */
 class User extends Authenticatable
 {
     use Notifiable, HasReputation;
-
-    /**
-     * Get the route key name for Laravel.
-     *
-     * @return string
-     */
-    public function getRouteKeyName()
-    {
-        return 'name';
-    }
 
     /**
      * The attributes that are mass assignable.
@@ -48,7 +39,22 @@ class User extends Authenticatable
 
     protected $casts = [
         'confirmed' => 'boolean',
+        'reputation' => 'integer',
     ];
+
+    protected $appends = [
+        'isAdmin'
+    ];
+
+    /**
+     * Get the route key name for Laravel.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'username';
+    }
 
     public function threads()
     {
@@ -90,5 +96,28 @@ class User extends Authenticatable
     public function visitedThreadCacheKey($thread)
     {
         return sprintf('users.%s.visits.%s', $this->id, $thread->id);
+    }
+
+    /**
+     * Determine if the user is an administrator.
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return in_array(
+            strtolower($this->email),
+            array_map('strtolower', config('forum.administrators'))
+        );
+    }
+
+    /**
+     * Determine if the user is an administrator.
+     *
+     * @return bool
+     */
+    public function getIsAdminAttribute()
+    {
+        return $this->isAdmin();
     }
 }
