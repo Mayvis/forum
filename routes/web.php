@@ -21,8 +21,8 @@ Route::get('/threads/{channel}/{thread}', 'ThreadsController@show')->name('threa
 Route::patch('/threads/{channel}/{thread}', 'ThreadsController@update')->name('threads.update');
 Route::delete('/threads/{channel}/{thread}', 'ThreadsController@destroy')->name('threads.destroy');
 
-Route::post('/locked-threads/{thread}', 'LockThreadsController@store')->name('locked-threads.store')->middleware('admin');
-Route::delete('/locked-threads/{thread}', 'LockThreadsController@destroy')->name('locked-threads.destroy')->middleware('admin');
+Route::post('/locked-threads/{thread}', 'LockThreadsController@store')->middleware('admin')->name('locked-threads.store');
+Route::delete('/locked-threads/{thread}', 'LockThreadsController@destroy')->middleware('admin')->name('locked-threads.destroy');
 
 Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionController@store')->middleware('auth')->name('threads-subscription.store');
 Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionController@destroy')->middleware('auth')->name('threads-subscription.destroy');
@@ -39,16 +39,16 @@ Route::delete('/replies/{reply}/favorites', 'FavoritesController@destroy')->name
 
 Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
 
-Route::get('/profiles/{user}/notifications', 'UserNotificationsController@index')->name('user-notification');
-Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotificationsController@destroy')->name('user-notification.destroy');
+Route::get('/profiles/{user}/notifications', 'UserNotificationsController@index')->name('user-notifications');
+Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotificationsController@destroy')->name('user-notifications.destroy');
 
 Route::get('/register/confirm', 'Auth\RegisterConfirmationController@index')->name('register.confirm');
 
 Route::get('/api/users', 'Api\UsersController@index')->name('api.users');
 Route::post('/api/users/{user}/avatars', 'Api\UserAvatarController@store')->middleware('auth')->name('avatars');
 
-Route::post('/pinned-threads/{thread}', 'PinnedThreadsController@store')->name('pinned-threads.store')->middleware('admin');
-Route::delete('/pinned-threads/{thread}', 'PinnedThreadsController@destroy')->name('pinned-threads.destroy')->middleware('admin');
+Route::post('/pinned-threads/{thread}', 'PinnedThreadsController@store')->middleware('admin')->name('pinned-threads.store');
+Route::delete('/pinned-threads/{thread}', 'PinnedThreadsController@destroy')->middleware('admin')->name('pinned-threads.destroy');
 
 Route::group([
     'prefix' => 'admin',

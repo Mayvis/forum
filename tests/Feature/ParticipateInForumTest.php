@@ -83,7 +83,7 @@ class ParticipateInForumTest extends TestCase
         $reply = create('App\Reply', ['user_id' => auth()->id()]);
 
         $updateReply = 'You been changed';
-        $this->patch("/replies/{$reply->id}", ['body' => $updateReply]);
+        $this->patch(route('replies.update', $reply->id), ['body' => $updateReply]);
 
         $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $updateReply]);
     }
