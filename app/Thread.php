@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\ThreadWasPublished;
 use Laravel\Scout\Searchable;
 use App\Events\ThreadReceivedNewReply;
 use Stevebauman\Purify\Facades\Purify;
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed slug
  * @property mixed best_reply_id
  * @property mixed locked
+ * @property mixed bestReply
  */
 class Thread extends Model
 {
@@ -26,7 +28,7 @@ class Thread extends Model
 
     protected $with = ['creator', 'channel'];
 
-    protected $appends = ['isSubscribedTo'];
+    protected $appends = ['isSubscribedTo', 'path'];
 
     protected $casts = [
         'locked' => 'boolean',
@@ -45,13 +47,15 @@ class Thread extends Model
         static::deleting(function ($thread) {
             $thread->replies->each->delete();
 
-            Reputation::reduce($thread->creator, Reputation::THREAD_WAS_PUBLISHED);
+            $thread->creator->loseReputation('thread_published');
         });
 
         static::created(function ($thread) {
             $thread->update(['slug' => $thread->title]);
 
-            Reputation::award($thread->creator, Reputation::THREAD_WAS_PUBLISHED);
+            event(new ThreadWasPublished($thread));
+
+            $thread->creator->gainReputation('thread_published');
         });
     }
 
@@ -63,6 +67,20 @@ class Thread extends Model
     public function path()
     {
         return "/threads/{$this->channel->slug}/{$this->slug}";
+    }
+
+    /**
+     * Fetch the path to the thread as a property.
+     *
+     * @return string
+     */
+    public function getPathAttribute()
+    {
+        if (! $this->channel) {
+            return '';
+        }
+
+        return $this->path();
     }
 
     /**
@@ -96,6 +114,15 @@ class Thread extends Model
     }
 
     /**
+     * A thread can have a best reply.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function bestReply()
+    {
+        return $this->hasOne(Reply::class, 'thread_id');
+    }
+
     /**
      * Add a reply to the thread.
      *
@@ -219,9 +246,32 @@ class Thread extends Model
      */
     public function markBestReply(Reply $reply)
     {
-        $reply->thread->update(['best_reply_id' => $reply->id]);
+        if ($this->hasBestReply()) {
+            $this->bestReply->owner->loseReputation('best_reply_awarded');
+        }
 
-        Reputation::award($reply->owner, Reputation::BEST_REPLY_AWARDED);
+        $this->update(['best_reply_id' => $reply->id]);
+
+        $reply->owner->gainReputation('best_reply_awarded');
+    }
+
+    /**
+     * Determine if the thread has a current best reply.
+     *
+     * @return bool
+     */
+    public function hasBestReply()
+    {
+        return ! is_null($this->best_reply_id);
+    }
+
+    /**
+     * Reset the best reply record.
+     */
+    public function removeBestReply()
+    {
+        $this->bestReply->owner->loseReputation('best_reply_awarded');
+        $this->update(['best_reply_id' => null]);
     }
 
     /**
