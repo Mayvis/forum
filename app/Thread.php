@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed best_reply_id
  * @property mixed locked
  * @property mixed bestReply
+ * @method static count()
  */
 class Thread extends Model
 {

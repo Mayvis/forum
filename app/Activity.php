@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static count()
+ */
 class Activity extends Model
 {
     protected $guarded = [];

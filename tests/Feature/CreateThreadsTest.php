@@ -122,7 +122,7 @@ class CreateThreadsTest extends TestCase
 
         $this->assertEquals("some-title-24-{$thread['id']}", $thread['slug']);
     }
-    
+
     /** @test */
     public function unauthorized_users_may_not_delete_threads()
     {
@@ -134,6 +134,17 @@ class CreateThreadsTest extends TestCase
         $this->signIn();
         $this->delete($thread->path())
             ->assertStatus(403);
+    }
+
+    /** @test */
+    public function a_new_thread_cannot_be_created_in_an_archived_channel()
+    {
+        $channel = create('App\Channel', ['archived' => true]);
+
+        $this->publishThread(['channel_id' => $channel->id])
+            ->assertSessionHasErrors('channel_id');
+
+        $this->assertEquals(0, Thread::count());
     }
 
     protected function publishThread($overrides = [])
@@ -162,5 +173,4 @@ class CreateThreadsTest extends TestCase
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
         $this->assertEquals(0, Activity::count());
     }
-
 }
