@@ -70,6 +70,18 @@ class ChannelAdministrationTest extends TestCase
     }
 
     /** @test */
+    public function the_path_to_a_thread_is_unaffected_by_its_channels_archived_status()
+    {
+        $thread = create('App\Thread');
+
+        $path = $thread->path();
+
+        $thread->channel->archive();
+
+        $this->assertEquals($path, $thread->fresh()->path());
+    }
+
+    /** @test */
     public function an_administrator_can_edit_an_existing_channel()
     {
         $this->withoutExceptionHandling();

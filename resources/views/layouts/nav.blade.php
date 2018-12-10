@@ -35,7 +35,7 @@
                     <a href="/threads/create" class="nav-link">New Threads</a>
                 </li>
 
-                <channel-dropdown :channels="{{ $channels }}"></channel-dropdown>
+                <channel-dropdown :channels="{{ \App\Channel::all() }}"></channel-dropdown>
 
             </ul>
 
