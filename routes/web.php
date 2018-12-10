@@ -46,6 +46,7 @@ Route::get('/register/confirm', 'Auth\RegisterConfirmationController@index')->na
 
 Route::get('/api/users', 'Api\UsersController@index')->name('api.users');
 Route::post('/api/users/{user}/avatars', 'Api\UserAvatarController@store')->middleware('auth')->name('avatars');
+Route::get('/api/channels', 'Api\ChannelsController@index');
 
 Route::post('/pinned-threads/{thread}', 'PinnedThreadsController@store')->middleware('admin')->name('pinned-threads.store');
 Route::delete('/pinned-threads/{thread}', 'PinnedThreadsController@destroy')->middleware('admin')->name('pinned-threads.destroy');
