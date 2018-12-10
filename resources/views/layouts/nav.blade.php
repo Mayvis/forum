@@ -54,9 +54,9 @@
                 @else
                     <user-notifications></user-notifications>
 
-                    @if (Auth::user()->isAdmin)
+                    @if (Auth::user()->isAdmin())
                         <li class="nav-item">
-                            <a href="/admin" class="nav-link"><span class="fas fa-cog" aria-hidden="true"></span></a>
+                            <a href="{{ route('admin.dashboard.index')  }}" class="nav-link"><span class="fas fa-cog" aria-hidden="true"></span></a>
                         </li>
                     @endif
 

@@ -15,6 +15,16 @@ class Channel extends Model
         'archived' => 'boolean',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('active', function ($builder) {
+            $builder->where('archived', false)
+                ->orderBy('name', 'asc');
+        });
+    }
+
     /**
      * Get the route key name for laravel.
      *
@@ -41,5 +51,16 @@ class Channel extends Model
     public function archive()
     {
         $this->update(['archived' => true]);
+    }
+
+    /**
+     * Set the name of the channel.
+     *
+     * @param string $name
+     */
+    public function setNameAttribute($name)
+    {
+        $this->attributes['name'] = $name;
+        $this->attributes['slug'] = str_slug($name);
     }
 }

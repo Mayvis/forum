@@ -9,12 +9,23 @@ use Illuminate\Support\Facades\Cache;
 
 class ChannelsController extends Controller
 {
+    /**
+     * Show all channels.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-        return view('admin.channels.index')
-            ->with('channels', Channel::with('threads')->get());
+        $channels = Channel::withoutGlobalScopes()->orderBy('name', 'asc')->with('threads')->get();
+
+        return view('admin.channels.index', compact('channels'));
     }
 
+    /**
+     * Show the form to create the form.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         return view('admin.channels.create');
@@ -61,7 +72,7 @@ class ChannelsController extends Controller
             ])
         );
 
-        cache()->forget('channels');
+        cache::forget('channels');
 
         if (request()->wantsJson()) {
             return response($channel, 200);
