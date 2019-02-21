@@ -8,7 +8,7 @@
 3. redis
 4. algolia
 5. vue
-6. google reCAPTCHA with
+6. google reCAPTCHA
 7. trix
 8. highlight 
 
